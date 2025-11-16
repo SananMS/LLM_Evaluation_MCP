@@ -14,8 +14,6 @@ MODEL_MINI = "gpt-4.1-mini"
 
 
 def build_fewshot_prompt(question, options, examples):
-    """Build the few-shot prompt using the same structure as your original script."""
-
     example_blocks = []
     for ex in examples:
         ex_opts = "\n".join([f"{k}. {v}" for k, v in ex["options"].items()])
@@ -54,25 +52,23 @@ def build_fewshot_prompt(question, options, examples):
 
 
 def ask_model(prompt):
-    """Same style as your second file: returns raw + parsed prediction."""
     response = client.responses.create(
         model=MODEL_MINI,
         input=prompt
     )
 
-    raw = response.output_text.strip()
+    raw_output = response.output_text.strip()
     predicted = "?"
 
-    for ch in raw.upper():
+    for ch in raw_output.upper():
         if ch in ["A", "B", "C", "D", "E"]:
             predicted = ch
             break
 
-    return raw, predicted
+    return raw_output, predicted
 
 
 def run_single_shuffle(dataset, run_number):
-    """Run one shuffle experiment."""
     base_examples = dataset[:SHOT_COUNT]
     eval_set = dataset[SHOT_COUNT:]
 

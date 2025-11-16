@@ -43,13 +43,13 @@ def ask_once(model_name, prompt):
         input=prompt
     )
 
-    raw = response.output_text.strip().upper()
+    raw_output = response.output_text.strip()
 
-    for ch in raw:
+    for ch in raw_output.upper():
         if ch in ["A", "B", "C", "D", "E"]:
-            return raw, ch
-
-    return raw, "?"
+            return raw_output, ch
+        
+    return raw_output, "?"
 
 
 def ask_model(model_name, question, options, q_index, correct):
@@ -99,11 +99,7 @@ def run_eval(model_name, output_file):
         correct_answer = q["answer"]
 
         predicted = ask_model(
-            model_name,
-            question,
-            options,
-            idx,
-            correct_answer
+            model_name, question, options, idx, correct_answer
         )
 
         is_correct = predicted == correct_answer

@@ -59,9 +59,9 @@ def ask_model(model_name, question, options, q_index, correct, examples):
         input=prompt
     )
 
-    raw = response.output_text.strip()
+    raw_output = response.output_text.strip()
     predicted = "?"
-    for ch in raw.upper():
+    for ch in raw_output.upper():
         if ch in ["A", "B", "C", "D", "E"]:
             predicted = ch
             break
@@ -73,7 +73,7 @@ def ask_model(model_name, question, options, q_index, correct, examples):
         dbg.write("--------------- PROMPT ---------------\n")
         dbg.write(prompt + "\n\n")
         dbg.write("--------------- RAW OUTPUT ----------\n")
-        dbg.write(raw + "\n\n")
+        dbg.write(raw_output + "\n\n")
         dbg.write("--------------- PARSED OUTPUT -------\n")
         dbg.write(f"Predicted: {predicted}\n")
         dbg.write(f"Correct:   {correct}\n")
